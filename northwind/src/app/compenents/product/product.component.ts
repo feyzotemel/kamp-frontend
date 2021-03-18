@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -22,47 +23,57 @@ export class ProductComponent implements OnInit {
   //   this.product5
   // ]
   products: Product[] = [];
- dataLoaded = false;
- filterText="";
- 
-  constructor(private productService:ProductService, private activatedRoute:ActivatedRoute) {}
+  dataLoaded = false;
+  filterText = '';
+
+  constructor(
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute,
+    private toastrService:ToastrService
+
+  ) {}
 
   ngOnInit(): void {
-    console.log("product")
+    console.log('product');
 
-    this.activatedRoute.params.subscribe(params => {
-      if(params["categoryId"]){
-        this.getProductsByCategory(params["categoryId"])
-      }
-      else{
+    this.activatedRoute.params.subscribe((params) => {
+      if (params['categoryId']) {
+        this.getProductsByCategory(params['categoryId']);
+      } else {
         this.getProducts();
-
       }
-    })
+    });
   }
 
   getProducts() {
-    console.log("api çağırılıyor");
+    console.log('api çağırılıyor');
 
-  this.productService.getProducts().subscribe(response => {
-
-    this.products = response.data
-    console.log("api çağırıldı");
-    this.dataLoaded =true;
-
-  })
-  console.log("method bitti");
+    this.productService.getProducts().subscribe((response) => {
+      this.products = response.data;
+      console.log('api çağırıldı');
+      this.dataLoaded = true;
+    });
+    console.log('method bitti');
   }
-  getProductsByCategory(categoryId:number) {
-    console.log("api çağırılıyor");
+  getProductsByCategory(categoryId: number) {
+    console.log('api çağırılıyor');
 
-  this.productService.getProductsByCategory(categoryId).subscribe(response => {
+    this.productService
+      .getProductsByCategory(categoryId)
+      .subscribe((response) => {
+        this.products = response.data;
+        console.log('api çağırıldı');
+        this.dataLoaded = true;
+      });
+    console.log('method bitti');
+  }
 
-    this.products = response.data
-    console.log("api çağırıldı");
-    this.dataLoaded =true;
-
-  })
-  console.log("method bitti");
+  addToCart(product:Product){
+    if(product.productName ==="Kazak")
+      this.toastrService.error("bu ürün sepete Eklenemez", product.productName)
+    
+    else
+    this.toastrService.success("sepete Eklendi", product.productName)
+    console.log(product)
   }
 }

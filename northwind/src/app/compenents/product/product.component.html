@@ -20,16 +20,23 @@
       <th>unitPrice</th>
       <th>kdvli Fiyat</th>
       <th>unitInStock</th>
+      <th>sepete ekle</th>
     </tr>
   </thead>
-  <tr *ngFor="let product of products| filter:filterText">
+  <tbody>
+    <tr *ngFor="let product of products| filter:filterText">
     <td>{{ product.productId }}</td>
     <td>{{ product.productName | uppercase}}</td>
     <td>{{ product.categoryId }}</td>
     <td>{{ product.unitPrice }}</td>
     <td>{{ product.unitPrice |vatAdded:10 |currency }}</td>
     <td>{{ product.unitInStock }}</td>
-  </tr>
+    <td><button type="button" (click)="addToCart(product)" class="btn btn-success " >sepete ekle</button></td>
+</tr>
+  </tbody>
+  
+
+  
 </table>
 
 
