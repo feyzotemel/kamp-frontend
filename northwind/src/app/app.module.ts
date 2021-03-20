@@ -12,6 +12,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations"
 
 import {ToastrModule} from "ngx-toastr";
+import { CartSummaryComponent } from './compenents/cart-summary/cart-summary.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {ToastrModule} from "ngx-toastr";
     NaviComponent,
     VatAddedPipe,
     FilterPipe,
+    CartSummaryComponent,
   ],
   imports: [
     BrowserModule,
